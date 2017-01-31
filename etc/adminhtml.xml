@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <catalog>
+            <children>
+                <aitoc_multilocationinventory translate="title" module="aitoc_multilocationinventory">
+                    <title>Manage Warehouses</title>
+                    <sort_order>15</sort_order>
+                    <action>adminhtml/multilocationinventory_warehouse/index</action>
+                </aitoc_multilocationinventory>
+            </children>
+        </catalog>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <catalog>
+                                <children>
+                                    <aitoc_multilocationinventory translate="title" module="aitoc_multilocationinventory">
+                                        <title>Manage Warehouses</title>
+                                    </aitoc_multilocationinventory>
+                                </children>
+                            </catalog>
+                            <config>
+                                <children>
+                                    <aitoc_multilocationinventory translate="title" module="aitoc_multilocationinventory">
+                                        <title>Manage Multi-Location Inventory</title>
+                                        <sort_order>9998</sort_order>
+                                    </aitoc_multilocationinventory>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

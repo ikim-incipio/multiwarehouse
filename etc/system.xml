@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+   <sections>
+        <aitoc_multilocationinventory translate="label" module="aitoc_multilocationinventory">
+           <class>separator-top</class>
+           <label>Multi-Location Inventory</label>
+           <tab>aitoc</tab>
+           <frontend_type>text</frontend_type>
+           <sort_order>200</sort_order>
+           <show_in_default>1</show_in_default>
+           <show_in_website>1</show_in_website>
+           <show_in_store>0</show_in_store>
+           <groups>
+               <general translate="label" module="aitoc_multilocationinventory">
+                   <label>General</label>
+                   <frontend_type>text</frontend_type>
+                   <sort_order>105</sort_order>
+                   <show_in_default>1</show_in_default>
+                   <show_in_website>1</show_in_website>
+                   <show_in_store>0</show_in_store>
+                   <expanded>1</expanded>
+                   <fields>
+                       <use_alternative_warehouse translate="label comment">
+                           <label>Allow Using Alternative Warehouse</label>
+                           <frontend_type>select</frontend_type>
+                           <source_model>adminhtml/system_config_source_yesno</source_model>
+                           <sort_order>10</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>0</show_in_store>
+                           <comment>If not enough quantity in the main warehouse.</comment>
+                       </use_alternative_warehouse>
+                       <alternative_warehouse_exceptions translate="label">
+                           <label>Exceptions (you may want to select exceptions that would override the use of alternative warehouse)</label>
+                           <frontend_type>multiselect</frontend_type>
+                           <source_model>aitoc_multilocationinventory/system_config_source_alternative_exceptions</source_model>
+                           <sort_order>20</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>0</show_in_store>
+                           <depends><use_alternative_warehouse>1</use_alternative_warehouse></depends>
+                       </alternative_warehouse_exceptions>
+
+                       <use_in_order_different_warehouses translate="label">
+                           <label>Allow Products from Different Warehouses to be Used in the Same Order</label>
+                           <frontend_type>select</frontend_type>
+                           <source_model>adminhtml/system_config_source_yesno</source_model>
+                           <sort_order>30</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>0</show_in_store>
+                       </use_in_order_different_warehouses>
+                       <!--<different_warehouse_only_for translate="label">-->
+                           <!--<label>Use Different Warehouse Only For</label>-->
+                           <!--<frontend_type>multiselect</frontend_type>-->
+                           <!--<source_model>aitoc_multilocationinventory/system_config_source_different_warehouses</source_model>-->
+                           <!--<sort_order>40</sort_order>-->
+                           <!--<show_in_default>1</show_in_default>-->
+                           <!--<show_in_website>1</show_in_website>-->
+                           <!--<show_in_store>0</show_in_store>-->
+                           <!--<depends><use_in_order_different_warehouses>1</use_in_order_different_warehouses></depends>-->
+                       <!--</different_warehouse_only_for>-->
+
+                       <show_warehouse_in_order translate="label">
+                           <label>Show Warehouse Information in Order (Admin only)</label>
+                           <frontend_type>select</frontend_type>
+                           <source_model>aitoc_multilocationinventory/system_config_source_order_show</source_model>
+                           <sort_order>50</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>0</show_in_store>
+                       </show_warehouse_in_order>
+
+                       <edit_warehouse_in_order translate="label">
+                           <label>Enable Warehouse Editing in Order</label>
+                           <frontend_type>select</frontend_type>
+                           <source_model>adminhtml/system_config_source_yesno</source_model>
+                           <sort_order>60</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>0</show_in_store>
+                       </edit_warehouse_in_order>
+
+                       <show_warehouse_in_order_grid translate="label">
+                           <label>Show Warehouses in Order Grid</label>
+                           <frontend_type>select</frontend_type>
+                           <source_model>adminhtml/system_config_source_yesno</source_model>
+                           <sort_order>70</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>0</show_in_store>
+                       </show_warehouse_in_order_grid>
+                   </fields>
+               </general>
+           </groups>
+       </aitoc_multilocationinventory>
+    </sections>
+</config>

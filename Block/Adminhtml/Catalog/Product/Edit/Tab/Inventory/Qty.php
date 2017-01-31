@@ -3,9 +3,13 @@ class Aitoc_MultiLocationInventory_Block_Adminhtml_Catalog_Product_Edit_Tab_Inve
 {
     public function getWarehouses() {
         $product = $this->getParentBlock()->getProduct();
+        $storeId = $product->getStore()->getId();
+        if (!$storeId){
+        	$storeId = $product->getStoreIds();
+        }
         return Mage::getResourceModel('aitoc_multilocationinventory/warehouse_collection')
             ->addStatusFilter()
-            ->addStoreFilter($product->getStoreIds())
+            ->addStoreFilter($storeId)
             ->addProductData($product->getId())
             ->addSortOrder();
     }

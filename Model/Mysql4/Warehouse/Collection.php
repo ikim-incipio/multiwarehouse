@@ -6,9 +6,10 @@ class Aitoc_MultiLocationInventory_Model_Mysql4_Warehouse_Collection extends Mag
         $this->_init('aitoc_multilocationinventory/warehouse');
     }
 
-    public function addStoreFilter($storeId = null) {
+    public function addStoreFilter($storeId) {
         if (is_null($storeId)) {
-            $storeId = Mage::app()->getStore()->getId();
+            //$storeId = Mage::app()->getStore()->getId();
+            $storeId[] = 0;
         }
 
         if (!is_array($storeId)) {
@@ -16,7 +17,7 @@ class Aitoc_MultiLocationInventory_Model_Mysql4_Warehouse_Collection extends Mag
         }
 
         // all stores
-        $storeId[] = 0;
+        //$storeId[] = 0;
 
         $this->getSelect()
             ->join(

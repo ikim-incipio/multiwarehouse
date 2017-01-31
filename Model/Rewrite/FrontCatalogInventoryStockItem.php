@@ -24,6 +24,8 @@ class Aitoc_MultiLocationInventory_Model_Rewrite_FrontCatalogInventoryStockItem 
                         $qty = floatval($stockData['warehouse_qty'][$warehouse->getId()]);
                         $totalQty += $qty;
                         $warehouse->saveQty($qty);
+                    } else {
+                        $totalQty += $warehouse->getQty();
                     }
                 }
                 $this->setQty($totalQty);
@@ -43,6 +45,8 @@ class Aitoc_MultiLocationInventory_Model_Rewrite_FrontCatalogInventoryStockItem 
                     $qty = floatval($warehouseQtyData[$warehouse->getId()]);
                     $totalQty += $qty;
                     $warehouse->saveQty($qty);
+                } else {
+                    $totalQty += $warehouse->getQty();
                 }
             }
             $this->setQty($totalQty);
@@ -287,19 +291,24 @@ class Aitoc_MultiLocationInventory_Model_Rewrite_FrontCatalogInventoryStockItem 
              * $session->getStoreId() does not work for frontend
              * it makes the system into thinking that all products are out of stock
              */
+            /* updated by Isaac on 1-31-2017
+             * if it does not meet store view exception setNotIncluded
+             */
             if (Mage::app()->getStore()->isAdmin()) {
                 if (!in_array(0, $storeIds) && !in_array($session->getStoreId(), $storeIds)) {
                     if (!in_array(Aitoc_MultiLocationInventory_Model_System_Config_Source_Alternative_Exceptions::STORE_VIEW, $exceptions)) {
                         continue;
                     }
-                    $warehouse->setIsAlternative(1);
+                    //$warehouse->setIsAlternative(1);
+                    $warehouse->setNotIncluded(1);
                 }
             } else {
                 if (!in_array(0, $storeIds) && !in_array($this->getStoreId(), $storeIds)) {
                     if (!in_array(Aitoc_MultiLocationInventory_Model_System_Config_Source_Alternative_Exceptions::STORE_VIEW, $exceptions)) {
                         continue;
                     }
-                    $warehouse->setIsAlternative(1);
+                    //$warehouse->setIsAlternative(1);
+                    $warehouse->setNotIncluded(1);
                 }
             }
 
@@ -323,10 +332,13 @@ class Aitoc_MultiLocationInventory_Model_Rewrite_FrontCatalogInventoryStockItem 
                 }
             }
 
-            if ($warehouse->getIsAlternative()) {
-                $allowedAlternativeWarehouses[] = $warehouse;
-            } else {
-                $allowedWarehouses[] = $warehouse;
+            // custom code by Isaac on 1-31-2017 - do not include if it doesn't meet store view exception
+            if (!$warehouse->getNotIncluded()){
+                if ($warehouse->getIsAlternative()) {
+                    $allowedAlternativeWarehouses[] = $warehouse;
+                } else {
+                    $allowedWarehouses[] = $warehouse;
+                }
             }
 
         }

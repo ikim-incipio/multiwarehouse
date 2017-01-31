@@ -16,6 +16,8 @@ class Aitoc_MultiLocationInventory_Block_Rewrite_AdminCatalogProductGrid extends
     protected function _prepareCollection()
     {
         $store = $this->_getStore();
+        $storeId = $store->getId();
+        Mage::register('admin_product_grid_store_id', $storeId);
         $collection = Mage::getModel('catalog/product')->getCollection()
             ->addAttributeToSelect('sku')
             ->addAttributeToSelect('name')
@@ -31,7 +33,12 @@ class Aitoc_MultiLocationInventory_Block_Rewrite_AdminCatalogProductGrid extends
                 'left');
         }
 
-        if ($warehouses = Mage::getResourceModel('aitoc_multilocationinventory/warehouse_collection')){
+        if ($storeId){
+            $warehouses = Mage::getResourceModel('aitoc_multilocationinventory/warehouse_collection')->addStoreFilter($storeId);
+        } else {
+            $warehouses = Mage::getResourceModel('aitoc_multilocationinventory/warehouse_collection');
+        }
+        if ($warehouses){
             foreach ($warehouses as $warehouse){
                 $collection->joinField('warehouse_' . $warehouse->getId(),
                     'aitoc_multilocationinventory/warehouse_product',

@@ -151,6 +151,8 @@ class Aitoc_MultiLocationInventory_Model_Observer extends Mage_CatalogInventory_
             $this->subtractQuoteInventory($observer);
             $this->reindexQuoteInventory($observer);
         }
+        // if split shipment - place order on hold
+        $this->isSplitShipment($observer);
     }
 
     public function subtractQuoteInventory(Varien_Event_Observer $observer)
@@ -372,5 +374,24 @@ class Aitoc_MultiLocationInventory_Model_Observer extends Mage_CatalogInventory_
         $collection = $observer->getCollection();
         //$stockItemTable = $collection->getTable('cataloginventory/stock_item');
         $collection->getSelect()->columns(array('website_id' => 'invtr.website_id'));
+    }
+
+    public function isSplitShipment($observer){
+        $order = $observer->getEvent()->getOrder();
+        $items = $order->getAllItems();
+        $warehouse = 0;
+        foreach($items as $item){
+            if ($item->getProductType() == 'simple'){
+                $itemId = $item->getItemId();
+                $next = Mage::getModel('aitoc_multilocationinventory/warehouse')->getWarehouseId($itemId);
+                if ($warehouse == 0) {
+                    $warehouse = $next;
+                } else if ($warehouse != $next){
+                    if ($order->canHold()){
+                        $order->setState('holded', true)->save();
+                    }
+                }
+            }
+        }
     }
 }

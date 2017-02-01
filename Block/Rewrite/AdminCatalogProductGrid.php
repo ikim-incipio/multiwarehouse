@@ -17,6 +17,7 @@ class Aitoc_MultiLocationInventory_Block_Rewrite_AdminCatalogProductGrid extends
     {
         $store = $this->_getStore();
         $storeId = $store->getId();
+        Mage::unregister('admin_product_grid_store_id');
         Mage::register('admin_product_grid_store_id', $storeId);
         $collection = Mage::getModel('catalog/product')->getCollection()
             ->addAttributeToSelect('sku')
